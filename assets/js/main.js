@@ -83,6 +83,59 @@ sr.reveal(`.choose__content, .calculate__img`, {origin: 'right'})
 
 
 /*=============== CALCULATE JS ===============*/
+const calculateForm = document.getElementById('calculate-form'),
+      calculateCm = document.getElementById('calculate-cm'),
+      calculateKg = document.getElementById('calculate-kg'),
+      calculateMessage = document.getElementById('calculate-message')
 
+const calculateBmi = (e) => {
+    e.preventDefault()
+
+    // check if the fields have a value
+    if(calculateCm.value === '' || calculateKg.value === ''){
+        // add and remove color
+        calculateMessage.classList.remove('color-green')
+        calculateMessage.classList.add('color-red')
+
+        // show message
+        calculateMessage.textContent = 'Fill in the Heigth and Weigth 👨‍💻'
+
+        // remove message three seconds
+        setTimeout(() => {
+            calculateMessage.textContent = ''
+        }, 3000);
+    }else{
+        // BMI Formula
+        const cm = calculateCm.value / 100,
+              kg = calculateKg.value,
+              bmi = Math.round(kg / (cm * cm))
+
+        // show your health status
+        if(bmi < 18.5){
+            // add color and display message
+            calculateMessage.classList.add('color-green');
+            calculateMessage.textContent = `Your BMI is ${bmi} and you are skinny 😌`
+        }else if(bmi < 25){
+            // add color and display message
+            calculateMessage.classList.add('color-green');
+            calculateMessage.textContent = `Your BMI is ${bmi} and you are healthy 😜`
+        }else{
+            // add color and display message
+            calculateMessage.classList.add('color-green');
+            calculateMessage.textContent = `Your BMI is ${bmi} and you are overweight 😌`
+        }
+
+        // To clear the input field
+        calculateCm.value = ''
+        calculateKg.value = ''
+
+        // Remove message four seconds
+        setTimeout(() => {
+            calculateMessage.textContent = ''
+        }, 4000)
+    }
+}
+
+calculateForm.addEventListener('submit', calculateBmi)
 
 /*=============== EMAIL JS ===============*/
